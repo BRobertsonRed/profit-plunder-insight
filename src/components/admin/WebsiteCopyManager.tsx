@@ -100,7 +100,7 @@ const WebsiteCopyManager = () => {
                     {copy.current_copy.length > 100 ? "..." : ""}
                   </TableCell>
                   <TableCell>
-                    {new Date(copy.last_updated).to LocaleDateString()}
+                    {new Date(copy.last_updated).toLocaleDateString()}
                   </TableCell>
                   <TableCell>{copy.updated_by}</TableCell>
                   <TableCell className="text-right">
