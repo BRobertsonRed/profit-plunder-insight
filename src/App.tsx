@@ -8,6 +8,7 @@ import Companies from "./pages/Companies";
 import Billionaires from "./pages/Billionaires";
 import Trackers from "./pages/Trackers";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/billionaires/:id" element={<Billionaires />} />
           <Route path="/trackers" element={<Trackers />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
