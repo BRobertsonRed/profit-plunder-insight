@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Companies from "./pages/Companies";
 import Billionaires from "./pages/Billionaires";
 import Trackers from "./pages/Trackers";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/billionaires" element={<Billionaires />} />
           <Route path="/billionaires/:id" element={<Billionaires />} />
           <Route path="/trackers" element={<Trackers />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

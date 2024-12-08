@@ -35,6 +35,12 @@ const Navigation = () => {
             >
               Trackers
             </Link>
+            <Link 
+              to="/about" 
+              className={`text-white hover:text-accent transition-colors ${isActive('/about') ? 'border-b-2 border-accent' : ''}`}
+            >
+              About
+            </Link>
             <button className="text-white hover:text-accent transition-colors">
               <Search size={20} />
             </button>
@@ -71,6 +77,13 @@ const Navigation = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Trackers
+              </Link>
+              <Link
+                to="/about"
+                className={`text-white hover:text-accent transition-colors ${isActive('/about') ? 'border-l-2 border-accent pl-2' : ''}`}
+                onClick={() => setIsOpen(false)}
+              >
+                About
               </Link>
             </div>
           </div>
