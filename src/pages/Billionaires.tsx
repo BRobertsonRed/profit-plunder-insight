@@ -22,16 +22,24 @@ const Billionaires = () => {
   const { data: billionaire, isLoading } = useQuery({
     queryKey: ["billionaire", id],
     queryFn: async () => {
+      if (!id) throw new Error("No ID provided");
+      
       const { data, error } = await supabase
         .from("billionaires")
-        .select("*, ownership(*, companies(*))")
-        .eq("id", id)
+        .select(`
+          *,
+          ownership (
+            *,
+            companies (*)
+          )
+        `)
+        .eq('id', parseInt(id))
         .single();
 
       if (error) throw error;
       return data;
     },
-    enabled: !!id,
+    enabled: !!id && !isNaN(parseInt(id)),
   });
 
   if (!id) {
