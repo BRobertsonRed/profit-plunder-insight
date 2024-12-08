@@ -17,8 +17,6 @@ const MobileMenu = ({ isOpen, isActive, onClose }: MobileMenuProps) => {
           { path: '/billionaires', label: 'Billionaires' },
           { path: '/trackers', label: 'Trackers' },
           { path: '/about', label: 'About' },
-          { path: '/contact', label: 'Contact' },
-          { path: '/privacy', label: 'Privacy' },
         ].map(({ path, label }) => (
           <Link
             key={path}

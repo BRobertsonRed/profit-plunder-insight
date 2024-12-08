@@ -14,8 +14,6 @@ const DesktopNav = ({ isActive, onSearchClick }: DesktopNavProps) => (
       { path: '/billionaires', label: 'Billionaires' },
       { path: '/trackers', label: 'Trackers' },
       { path: '/about', label: 'About' },
-      { path: '/contact', label: 'Contact' },
-      { path: '/privacy', label: 'Privacy' },
     ].map(({ path, label }) => (
       <NavLink key={path} to={path} isActive={isActive(path)}>
         {label}
