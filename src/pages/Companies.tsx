@@ -1,189 +1,139 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Navigation from "../components/Navigation";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { MapPin, DollarSign, AlertTriangle, Building2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import Navigation from "@/components/Navigation";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-// Placeholder data for the profit chart
-const profitData = [
-  { year: '2019', amount: 4000 },
-  { year: '2020', amount: 3000 },
-  { year: '2021', amount: 5000 },
-  { year: '2022', amount: 7000 },
-  { year: '2023', amount: 6000 },
-];
+export default function Companies() {
+  const { toast } = useToast();
 
-const Companies = () => {
+  const { data: companies, isLoading, error } = useQuery({
+    queryKey: ["companies"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("companies")
+        .select(`
+          *,
+          environmental_violations(count),
+          legal_cases(count),
+          wage_theft_cases(count)
+        `);
+      
+      if (error) {
+        console.error("Error fetching companies:", error);
+        throw new Error(error.message);
+      }
+      
+      return data;
+    },
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="container mx-auto pt-24 px-6">
-        {/* Company Header */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="heading-xl mb-4">MegaCorp Industries</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="bg-white shadow-lg">
-              <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <Building2 className="w-4 h-4 text-muted mr-2" />
-                <CardTitle className="text-sm font-medium">Industry</CardTitle>
-              </CardHeader>
+      
+      <main className="container mx-auto px-4 py-8 mt-16">
+        <h1 className="heading-lg text-center mb-8 animate-fade-up">
+          Corporate Accountability Tracker
+        </h1>
+
+        {/* Stats Overview */}
+        {companies && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-up">
+            <Card className="stat-card">
               <CardContent>
-                <p className="text-2xl font-bold">Technology</p>
+                <h3 className="font-display text-lg font-bold mb-2">Total Companies</h3>
+                <p className="text-3xl font-bold text-primary">{companies.length}</p>
               </CardContent>
             </Card>
-            <Card className="bg-white shadow-lg">
-              <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <MapPin className="w-4 h-4 text-muted mr-2" />
-                <CardTitle className="text-sm font-medium">Headquarters</CardTitle>
-              </CardHeader>
+            <Card className="stat-card">
               <CardContent>
-                <p className="text-2xl font-bold">Silicon Valley</p>
+                <h3 className="font-display text-lg font-bold mb-2">Environmental Violations</h3>
+                <p className="text-3xl font-bold text-accent">
+                  {companies.reduce((acc, company) => acc + (company.environmental_violations?.[0]?.count || 0), 0)}
+                </p>
               </CardContent>
             </Card>
-            <Card className="bg-white shadow-lg">
-              <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <DollarSign className="w-4 h-4 text-muted mr-2" />
-                <CardTitle className="text-sm font-medium">Market Cap</CardTitle>
-              </CardHeader>
+            <Card className="stat-card">
               <CardContent>
-                <p className="text-2xl font-bold">$500B</p>
+                <h3 className="font-display text-lg font-bold mb-2">Legal Cases</h3>
+                <p className="text-3xl font-bold text-secondary">
+                  {companies.reduce((acc, company) => acc + (company.legal_cases?.[0]?.count || 0), 0)}
+                </p>
               </CardContent>
             </Card>
-            <Card className="bg-white shadow-lg">
-              <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <AlertTriangle className="w-4 h-4 text-muted mr-2" />
-                <CardTitle className="text-sm font-medium">Risk Level</CardTitle>
-              </CardHeader>
+            <Card className="stat-card">
               <CardContent>
-                <p className="text-2xl font-bold text-red-600">High</p>
+                <h3 className="font-display text-lg font-bold mb-2">Wage Theft Cases</h3>
+                <p className="text-3xl font-bold text-muted">
+                  {companies.reduce((acc, company) => acc + (company.wage_theft_cases?.[0]?.count || 0), 0)}
+                </p>
               </CardContent>
             </Card>
           </div>
-        </div>
+        )}
 
-        {/* Tabs Section */}
-        <Tabs defaultValue="financials" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-4">
-            <TabsTrigger value="financials">Financials</TabsTrigger>
-            <TabsTrigger value="wage-theft">Wage Theft</TabsTrigger>
-            <TabsTrigger value="environmental">Environmental Impact</TabsTrigger>
-            <TabsTrigger value="executive">Executive Compensation</TabsTrigger>
-          </TabsList>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="min-h-[400px] flex items-center justify-center">
+            <LoadingSpinner />
+          </div>
+        )}
+        
+        {/* Error State */}
+        {error && (
+          <div className="max-w-2xl mx-auto">
+            <ErrorMessage 
+              title="Failed to load companies" 
+              message="There was an error loading the companies data. Please try again later." 
+            />
+          </div>
+        )}
 
-          <TabsContent value="financials" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Profit Trends</CardTitle>
-              </CardHeader>
-              <CardContent className="h-[400px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={profitData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="year" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="amount" stroke="#8B0000" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="wage-theft" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Wage Theft Cases</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <Card key={i}>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Case #{i}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                        <div className="mt-2 text-sm">
-                          <span className="font-bold">Amount: </span>
-                          <span className="text-red-600">$100,000</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="environmental" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Environmental Violations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <Card key={i}>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Violation #{i}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground">
-                          Environmental violation description. Location and impact details.
-                        </p>
-                        <div className="mt-2 text-sm">
-                          <span className="font-bold">Fine: </span>
-                          <span className="text-red-600">$500,000</span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="executive" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Executive Compensation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <Card key={i}>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Executive #{i}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-2">
-                          <div>
-                            <span className="font-bold">Base Salary: </span>
-                            <span>$1,000,000</span>
-                          </div>
-                          <div>
-                            <span className="font-bold">Bonus: </span>
-                            <span>$500,000</span>
-                          </div>
-                          <div>
-                            <span className="font-bold">Stock Options: </span>
-                            <span>$2,000,000</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+        {/* Companies Table */}
+        {companies && (
+          <div className="overflow-x-auto animate-fade-up">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Company</TableHead>
+                  <TableHead>Industry</TableHead>
+                  <TableHead>Headquarters</TableHead>
+                  <TableHead className="text-right">Market Cap</TableHead>
+                  <TableHead className="text-right">Violations</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {companies.map((company) => (
+                  <TableRow key={company.id}>
+                    <TableCell className="font-medium">{company.name}</TableCell>
+                    <TableCell>{company.industry}</TableCell>
+                    <TableCell>{company.headquarters}</TableCell>
+                    <TableCell className="text-right">
+                      ${company.market_cap ? (company.market_cap / 1e9).toFixed(2) + "B" : "N/A"}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {(company.environmental_violations?.[0]?.count || 0) + 
+                       (company.legal_cases?.[0]?.count || 0) + 
+                       (company.wage_theft_cases?.[0]?.count || 0)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </main>
     </div>
   );
-};
-
-export default Companies;
+}
