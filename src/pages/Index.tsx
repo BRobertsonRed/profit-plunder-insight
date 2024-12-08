@@ -1,68 +1,124 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="pt-24 px-6">
-        {/* Hero Section */}
-        <section className="container mx-auto text-center py-20">
-          <h1 className="heading-xl mb-6 animate-fade-up">
-            Exposing Corporate Greed
-          </h1>
-          <p className="body-text max-w-2xl mx-auto mb-12 text-muted animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            Uncovering the truth about corporate wealth, unethical practices, and their impact on society.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-up" style={{ animationDelay: "0.4s" }}>
-            <Link to="/companies" className="bg-primary text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition-colors inline-flex items-center">
-              Explore Companies <ArrowRight className="ml-2" size={20} />
-            </Link>
-          </div>
-        </section>
+      {/* Hero Section */}
+      <section className="container mx-auto text-center py-24 px-4">
+        <h1 className="heading-xl mb-6 animate-fade-up">
+          Exposing Corporate Wealth and Unethical Practices
+        </h1>
+        <p className="body-text max-w-2xl mx-auto mb-12 text-muted animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          Uncovering the truth about corporate greed and its impact on society.
+        </p>
+        <Link 
+          to="/companies" 
+          className="inline-flex items-center px-8 py-3 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-colors animate-fade-up"
+          style={{ animationDelay: "0.4s" }}
+        >
+          Explore Our Database <ArrowRight className="ml-2" size={20} />
+        </Link>
+      </section>
 
-        {/* Key Statistics */}
-        <section className="container mx-auto py-20">
-          <h2 className="heading-lg text-center mb-12">Key Statistics</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="stat-card">
-              <h3 className="text-4xl font-bold text-primary mb-2">$3.65T</h3>
-              <p className="text-muted">Total CEO Compensation</p>
-            </div>
-            <div className="stat-card">
-              <h3 className="text-4xl font-bold text-primary mb-2">287x</h3>
-              <p className="text-muted">Average CEO-to-Worker Pay Ratio</p>
-            </div>
-            <div className="stat-card">
-              <h3 className="text-4xl font-bold text-primary mb-2">$8.9B</h3>
-              <p className="text-muted">Wage Theft Settlements</p>
-            </div>
-          </div>
-        </section>
+      {/* Quick Stats Section */}
+      <section className="container mx-auto py-16 px-4">
+        <h2 className="heading-lg text-center mb-12">Corporate Impact Statistics</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Card className="stat-card">
+            <CardHeader>
+              <CardTitle className="text-4xl font-bold text-primary">$8.9B</CardTitle>
+              <CardDescription>Total Wage Theft</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted">Documented cases of wage theft across major corporations</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="stat-card">
+            <CardHeader>
+              <CardTitle className="text-4xl font-bold text-primary">$12.3B</CardTitle>
+              <CardDescription>Environmental Fines</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted">Penalties for environmental violations</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="stat-card">
+            <CardHeader>
+              <CardTitle className="text-4xl font-bold text-primary">287x</CardTitle>
+              <CardDescription>CEO Pay Gap</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted">Average CEO-to-worker pay ratio</p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
-        {/* Latest Investigations */}
-        <section className="container mx-auto py-20">
-          <h2 className="heading-lg text-center mb-12">Latest Investigations</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div className="aspect-video bg-secondary"></div>
-                <div className="p-6">
-                  <h3 className="font-display text-xl font-bold mb-2">Investigation Title {i}</h3>
-                  <p className="text-muted mb-4">
-                    A brief description of the investigation and its findings...
-                  </p>
-                  <Link to={`/investigation/${i}`} className="text-primary hover:text-accent transition-colors inline-flex items-center">
-                    Read More <ArrowRight className="ml-2" size={16} />
-                  </Link>
-                </div>
-              </div>
+      {/* Top Offenders Section */}
+      <section className="container mx-auto py-16 px-4">
+        <h2 className="heading-lg text-center mb-12">Top Corporate Offenders</h2>
+        <Carousel className="w-full max-w-4xl mx-auto">
+          <CarouselContent>
+            {[
+              {
+                name: "MegaCorp Industries",
+                violations: "Environmental Disasters",
+                amount: "$2.3B in Fines"
+              },
+              {
+                name: "Global Tech Giants",
+                violations: "Worker Exploitation",
+                amount: "$1.8B in Wage Theft"
+              },
+              {
+                name: "Finance Holdings Ltd",
+                violations: "Tax Evasion",
+                amount: "$3.1B Avoided"
+              }
+            ].map((company, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <Card className="h-full">
+                  <CardHeader>
+                    <CardTitle>{company.name}</CardTitle>
+                    <CardDescription>{company.violations}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-2xl font-bold text-primary">{company.amount}</p>
+                    <Link 
+                      to={`/companies/${index + 1}`} 
+                      className="mt-4 inline-flex items-center text-sm text-primary hover:text-primary/80"
+                    >
+                      View Details <ArrowRight className="ml-1" size={16} />
+                    </Link>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
             ))}
-          </div>
-        </section>
-      </main>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </section>
 
       {/* Footer */}
       <footer className="bg-secondary text-white py-12">
