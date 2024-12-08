@@ -12,24 +12,33 @@ export type Database = {
       billionaires: {
         Row: {
           id: number
+          last_change: number | null
+          linked_companies: Json | null
           name: string
           net_worth: number | null
           primary_industry: string | null
           residence: string | null
+          ytd_change: number | null
         }
         Insert: {
           id?: number
+          last_change?: number | null
+          linked_companies?: Json | null
           name: string
           net_worth?: number | null
           primary_industry?: string | null
           residence?: string | null
+          ytd_change?: number | null
         }
         Update: {
           id?: number
+          last_change?: number | null
+          linked_companies?: Json | null
           name?: string
           net_worth?: number | null
           primary_industry?: string | null
           residence?: string | null
+          ytd_change?: number | null
         }
         Relationships: []
       }

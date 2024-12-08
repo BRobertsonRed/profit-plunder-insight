@@ -4,6 +4,11 @@ import { Tables } from "@/integrations/supabase/types";
 type BillionaireWithOwnership = Tables<"billionaires"> & {
   ownership: Array<{
     companies: Tables<"companies"> | null;
+    ownership_percentage: number | null;
+    control_status: boolean | null;
+    id: number;
+    billionaire_id: number | null;
+    company_id: number | null;
   } | null> | null;
 };
 
