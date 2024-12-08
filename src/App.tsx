@@ -10,6 +10,7 @@ import Trackers from "./pages/Trackers";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
+import Search from "./pages/Search";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
