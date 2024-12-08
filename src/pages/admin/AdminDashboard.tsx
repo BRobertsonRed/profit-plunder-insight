@@ -6,6 +6,7 @@ import BillionairesManager from "@/components/admin/BillionairesManager";
 import ViolationsManager from "@/components/admin/ViolationsManager";
 import ImpactStoriesManager from "@/components/admin/ImpactStoriesManager";
 import WebsiteCopyManager from "@/components/admin/WebsiteCopyManager";
+import ErrorLogsManager from "@/components/admin/ErrorLogsManager";
 
 const AdminDashboard = () => {
   return (
@@ -17,6 +18,7 @@ const AdminDashboard = () => {
         <Route path="violations" element={<ViolationsManager />} />
         <Route path="impact-stories" element={<ImpactStoriesManager />} />
         <Route path="website-copy" element={<WebsiteCopyManager />} />
+        <Route path="error-logs" element={<ErrorLogsManager />} />
       </Routes>
     </AdminLayout>
   );

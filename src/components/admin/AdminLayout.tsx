@@ -8,6 +8,7 @@ import {
   AlertTriangle,
   MessageSquare,
   FileText,
+  AlertCircle,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -25,6 +26,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { path: "/violations", label: "Violations", icon: AlertTriangle },
     { path: "/impact-stories", label: "Impact Stories", icon: MessageSquare },
     { path: "/website-copy", label: "Website Copy", icon: FileText },
+    { path: "/error-logs", label: "Error Logs", icon: AlertCircle },
   ];
 
   return (
