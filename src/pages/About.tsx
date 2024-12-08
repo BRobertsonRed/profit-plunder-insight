@@ -23,33 +23,55 @@ const About = () => {
       {/* Mission Statement Section */}
       <section className="py-16 px-6 bg-white">
         <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="heading-lg mb-6 text-secondary">Our Mission</h2>
-            <p className="body-text text-gray-700 mb-12">
-              ProfitandPlunder.org is dedicated to transparency and accountability by exposing corporate wealth, unethical practices, and their societal impacts.
-            </p>
+          <div className="max-w-3xl mx-auto space-y-12">
+            {/* Mission */}
+            <div className="text-center">
+              <h2 className="heading-lg text-secondary mb-6">Our Mission</h2>
+              <p className="body-text text-gray-700">
+                ProfitandPlunder.org is dedicated to transparency and accountability by exposing corporate wealth, unethical practices, and their societal impacts.
+              </p>
+            </div>
 
-            <h3 className="heading-md text-secondary mb-4">Key Values</h3>
-            <ul className="list-disc pl-6 mb-8 text-gray-700 space-y-2">
-              <li>Transparency</li>
-              <li>Accountability</li>
-              <li>Advocacy for change</li>
-              <li>Empowerment of individuals through data</li>
-            </ul>
+            {/* Key Values */}
+            <div>
+              <h3 className="heading-md text-secondary mb-6 text-center">Key Values</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {["Transparency", "Accountability", "Advocacy for change", "Empowerment of individuals through data"].map((value, index) => (
+                  <Card key={index} className="bg-gray-50 border-none hover:shadow-md transition-shadow">
+                    <CardContent className="p-6 text-center">
+                      <p className="text-gray-700 font-medium">{value}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
 
-            <h3 className="heading-md text-secondary mb-4">Goals</h3>
-            <ul className="list-disc pl-6 mb-8 text-gray-700 space-y-3">
-              <li>Bring transparency to corporate practices by exposing wage theft, labor violations, and unethical behaviors globally.</li>
-              <li>Leverage data to reveal the impact of corporate lobbying, tax avoidance, and environmental exploitation on workers and communities.</li>
-              <li>Empower individuals, organizations, and communities with actionable insights to hold corporations accountable and drive systemic change.</li>
-              <li>Inspire policy reform and corporate responsibility by exposing critical data to inform public and governmental action.</li>
-              <li>Educate the public about the societal and economic impacts of corporate wealth concentration and unethical practices.</li>
-            </ul>
+            {/* Goals */}
+            <div>
+              <h3 className="heading-md text-secondary mb-6 text-center">Goals</h3>
+              <div className="space-y-4">
+                {[
+                  "Bring transparency to corporate practices by exposing wage theft, labor violations, and unethical behaviors globally.",
+                  "Leverage data to reveal the impact of corporate lobbying, tax avoidance, and environmental exploitation on workers and communities.",
+                  "Empower individuals, organizations, and communities with actionable insights to hold corporations accountable and drive systemic change.",
+                  "Inspire policy reform and corporate responsibility by exposing critical data to inform public and governmental action.",
+                  "Educate the public about the societal and economic impacts of corporate wealth concentration and unethical practices."
+                ].map((goal, index) => (
+                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                    <span className="text-primary font-bold">{index + 1}.</span>
+                    <p className="text-gray-700">{goal}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-            <h3 className="heading-md text-secondary mb-4">Intended Impact</h3>
-            <p className="body-text text-gray-700">
-              By providing detailed data, we aim to shed light on corporate practices and inspire informed actions toward fairness and justice.
-            </p>
+            {/* Intended Impact */}
+            <div className="bg-secondary text-white p-8 rounded-lg text-center">
+              <h3 className="heading-md mb-4">Intended Impact</h3>
+              <p className="text-lg">
+                By providing detailed data, we aim to shed light on corporate practices and inspire informed actions toward fairness and justice.
+              </p>
+            </div>
           </div>
         </div>
       </section>
