@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Search from "./pages/Search";
+import Filter from "./pages/Filter";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/filter" element={<Filter />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
