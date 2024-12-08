@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Navigation from "../components/Navigation";
 import { supabase } from "@/integrations/supabase/client";
 import { Building2, DollarSign, Globe, Factory } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ErrorMessage } from "@/components/ui/error-message";
+import { useToast } from "@/hooks/use-toast";
 
-// Placeholder data for the pie chart
 const industryControlData = [
   { name: "Technology", value: 40 },
   { name: "Real Estate", value: 30 },
@@ -18,11 +20,13 @@ const COLORS = ["#8B0000", "#D32F2F", "#FF4444", "#FF8A80"];
 
 const Billionaires = () => {
   const { id } = useParams();
+  const { toast } = useToast();
 
-  const { data: billionaire, isLoading } = useQuery({
+  const { data: billionaire, isLoading, error } = useQuery({
     queryKey: ["billionaire", id],
     queryFn: async () => {
       if (!id) throw new Error("No ID provided");
+      console.log("Fetching billionaire data for ID:", id);
       
       const { data, error } = await supabase
         .from("billionaires")
@@ -36,7 +40,12 @@ const Billionaires = () => {
         .eq('id', parseInt(id))
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching billionaire:", error);
+        throw error;
+      }
+      
+      console.log("Fetched billionaire data:", data);
       return data;
     },
     enabled: !!id && !isNaN(parseInt(id)),
@@ -46,11 +55,25 @@ const Billionaires = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
-        <main className="container mx-auto pt-24 px-6">
-          <h1 className="heading-xl mb-6">Billionaires</h1>
-          <p className="body-text mb-8">
+        <main className="container mx-auto px-4 pt-24 lg:px-6">
+          <h1 className="heading-xl mb-6 text-center lg:text-left">Billionaires</h1>
+          <p className="body-text mb-8 text-center lg:text-left">
             Select a billionaire to view their detailed profile.
           </p>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="container mx-auto px-4 pt-24 lg:px-6">
+          <ErrorMessage 
+            title="Failed to load billionaire data" 
+            message={error instanceof Error ? error.message : "An unexpected error occurred"} 
+          />
         </main>
       </div>
     );
@@ -60,11 +83,8 @@ const Billionaires = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
-        <main className="container mx-auto pt-24 px-6">
-          <div className="animate-pulse">
-            <div className="h-12 bg-gray-200 rounded w-3/4 mb-4"></div>
-            <div className="h-8 bg-gray-200 rounded w-1/2 mb-8"></div>
-          </div>
+        <main className="container mx-auto px-4 pt-24 lg:px-6">
+          <LoadingSpinner />
         </main>
       </div>
     );
@@ -73,14 +93,14 @@ const Billionaires = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="container mx-auto pt-24 px-6">
+      <main className="container mx-auto px-4 pt-24 lg:px-6">
         {/* Summary Block */}
         <div className="mb-8 animate-fade-in">
-          <h1 className="heading-xl mb-4">{billionaire?.name || "Loading..."}</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="bg-white shadow-lg">
+          <h1 className="heading-xl mb-6 text-center lg:text-left">{billionaire?.name || "Loading..."}</h1>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Card className="bg-white shadow-lg transition-transform hover:scale-105">
               <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <DollarSign className="w-4 h-4 text-muted mr-2" />
+                <DollarSign className="mr-2 h-4 w-4 text-muted" />
                 <CardTitle className="text-sm font-medium">Net Worth</CardTitle>
               </CardHeader>
               <CardContent>
@@ -90,9 +110,9 @@ const Billionaires = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-white shadow-lg transition-transform hover:scale-105">
               <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <Factory className="w-4 h-4 text-muted mr-2" />
+                <Factory className="mr-2 h-4 w-4 text-muted" />
                 <CardTitle className="text-sm font-medium">Industry</CardTitle>
               </CardHeader>
               <CardContent>
@@ -102,9 +122,9 @@ const Billionaires = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-white shadow-lg transition-transform hover:scale-105">
               <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <Globe className="w-4 h-4 text-muted mr-2" />
+                <Globe className="mr-2 h-4 w-4 text-muted" />
                 <CardTitle className="text-sm font-medium">Residence</CardTitle>
               </CardHeader>
               <CardContent>
@@ -114,9 +134,9 @@ const Billionaires = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-white shadow-lg">
+            <Card className="bg-white shadow-lg transition-transform hover:scale-105">
               <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                <Building2 className="w-4 h-4 text-muted mr-2" />
+                <Building2 className="mr-2 h-4 w-4 text-muted" />
                 <CardTitle className="text-sm font-medium">Companies</CardTitle>
               </CardHeader>
               <CardContent>
@@ -130,10 +150,10 @@ const Billionaires = () => {
 
         {/* Linked Companies Section */}
         <div className="mb-8">
-          <h2 className="heading-lg mb-4">Company Ownership</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h2 className="heading-lg mb-6 text-center lg:text-left">Company Ownership</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {billionaire?.ownership?.map((ownership: any) => (
-              <Card key={ownership.id} className="bg-white shadow-lg">
+              <Card key={ownership.id} className="bg-white shadow-lg transition-transform hover:scale-105">
                 <CardHeader>
                   <CardTitle>{ownership.companies?.name}</CardTitle>
                 </CardHeader>
@@ -150,13 +170,13 @@ const Billionaires = () => {
 
         {/* Industry Influence Section */}
         <div className="mb-8">
-          <h2 className="heading-lg mb-4">Industry Influence</h2>
+          <h2 className="heading-lg mb-6 text-center lg:text-left">Industry Influence</h2>
           <Card className="bg-white shadow-lg">
             <CardHeader>
-              <CardTitle>Industry Control Distribution</CardTitle>
+              <CardTitle className="text-center lg:text-left">Industry Control Distribution</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="h-[400px] w-full">
+              <div className="h-[300px] w-full lg:h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -164,7 +184,7 @@ const Billionaires = () => {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={150}
+                      outerRadius="90%"
                       fill="#8884d8"
                       dataKey="value"
                       label={({ name, percent }) => 
