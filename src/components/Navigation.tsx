@@ -47,6 +47,12 @@ const Navigation = () => {
             >
               Contact
             </Link>
+            <Link 
+              to="/privacy" 
+              className={`text-white hover:text-accent transition-colors ${isActive('/privacy') ? 'border-b-2 border-accent' : ''}`}
+            >
+              Privacy
+            </Link>
             <button className="text-white hover:text-accent transition-colors">
               <Search size={20} />
             </button>
@@ -97,6 +103,13 @@ const Navigation = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Contact
+              </Link>
+              <Link
+                to="/privacy"
+                className={`text-white hover:text-accent transition-colors ${isActive('/privacy') ? 'border-l-2 border-accent pl-2' : ''}`}
+                onClick={() => setIsOpen(false)}
+              >
+                Privacy
               </Link>
             </div>
           </div>
