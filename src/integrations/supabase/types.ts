@@ -388,6 +388,30 @@ export type Database = {
           },
         ]
       }
+      website_copy: {
+        Row: {
+          current_copy: string
+          id: number
+          last_updated: string | null
+          section: string
+          updated_by: string | null
+        }
+        Insert: {
+          current_copy: string
+          id?: number
+          last_updated?: string | null
+          section: string
+          updated_by?: string | null
+        }
+        Update: {
+          current_copy?: string
+          id?: number
+          last_updated?: string | null
+          section?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
