@@ -1,26 +1,38 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="bg-secondary py-4 px-6 fixed w-full top-0 z-50">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-white font-display text-2xl">
+          <Link to="/home" className="text-white font-display text-2xl">
             Profit & Plunder
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/companies" className="text-white hover:text-accent transition-colors">
+            <Link 
+              to="/companies" 
+              className={`text-white hover:text-accent transition-colors ${isActive('/companies') ? 'border-b-2 border-accent' : ''}`}
+            >
               Companies
             </Link>
-            <Link to="/billionaires" className="text-white hover:text-accent transition-colors">
+            <Link 
+              to="/billionaires" 
+              className={`text-white hover:text-accent transition-colors ${isActive('/billionaires') ? 'border-b-2 border-accent' : ''}`}
+            >
               Billionaires
             </Link>
-            <Link to="/trackers" className="text-white hover:text-accent transition-colors">
+            <Link 
+              to="/trackers" 
+              className={`text-white hover:text-accent transition-colors ${isActive('/trackers') ? 'border-b-2 border-accent' : ''}`}
+            >
               Trackers
             </Link>
             <button className="text-white hover:text-accent transition-colors">
@@ -41,21 +53,21 @@ const Navigation = () => {
             <div className="flex flex-col space-y-4">
               <Link
                 to="/companies"
-                className="text-white hover:text-accent transition-colors"
+                className={`text-white hover:text-accent transition-colors ${isActive('/companies') ? 'border-l-2 border-accent pl-2' : ''}`}
                 onClick={() => setIsOpen(false)}
               >
                 Companies
               </Link>
               <Link
                 to="/billionaires"
-                className="text-white hover:text-accent transition-colors"
+                className={`text-white hover:text-accent transition-colors ${isActive('/billionaires') ? 'border-l-2 border-accent pl-2' : ''}`}
                 onClick={() => setIsOpen(false)}
               >
                 Billionaires
               </Link>
               <Link
                 to="/trackers"
-                className="text-white hover:text-accent transition-colors"
+                className={`text-white hover:text-accent transition-colors ${isActive('/trackers') ? 'border-l-2 border-accent pl-2' : ''}`}
                 onClick={() => setIsOpen(false)}
               >
                 Trackers
