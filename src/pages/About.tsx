@@ -21,23 +21,43 @@ const About = () => {
       </section>
 
       {/* Mission Statement Section */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-6 bg-white">
         <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="heading-lg mb-6">Our Mission</h2>
-            <p className="body-text text-muted-foreground">
-              ProfitandPlunder.org is committed to transparency and accountability. Our platform reveals 
-              corporate wealth, wage theft, environmental violations, lobbying efforts, and more, 
-              empowering users to demand change.
+          <div className="max-w-3xl mx-auto">
+            <h2 className="heading-lg mb-6 text-secondary">Our Mission</h2>
+            <p className="body-text text-gray-700 mb-12">
+              ProfitandPlunder.org is dedicated to transparency and accountability by exposing corporate wealth, unethical practices, and their societal impacts.
+            </p>
+
+            <h3 className="heading-md text-secondary mb-4">Key Values</h3>
+            <ul className="list-disc pl-6 mb-8 text-gray-700 space-y-2">
+              <li>Transparency</li>
+              <li>Accountability</li>
+              <li>Advocacy for change</li>
+              <li>Empowerment of individuals through data</li>
+            </ul>
+
+            <h3 className="heading-md text-secondary mb-4">Goals</h3>
+            <ul className="list-disc pl-6 mb-8 text-gray-700 space-y-3">
+              <li>Bring transparency to corporate practices by exposing wage theft, labor violations, and unethical behaviors globally.</li>
+              <li>Leverage data to reveal the impact of corporate lobbying, tax avoidance, and environmental exploitation on workers and communities.</li>
+              <li>Empower individuals, organizations, and communities with actionable insights to hold corporations accountable and drive systemic change.</li>
+              <li>Inspire policy reform and corporate responsibility by exposing critical data to inform public and governmental action.</li>
+              <li>Educate the public about the societal and economic impacts of corporate wealth concentration and unethical practices.</li>
+            </ul>
+
+            <h3 className="heading-md text-secondary mb-4">Intended Impact</h3>
+            <p className="body-text text-gray-700">
+              By providing detailed data, we aim to shed light on corporate practices and inspire informed actions toward fairness and justice.
             </p>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 px-6 bg-secondary/5">
+      <section className="py-16 px-6 bg-gray-50">
         <div className="container mx-auto">
-          <h2 className="heading-lg text-center mb-12">Core Features</h2>
+          <h2 className="heading-lg text-center mb-12 text-secondary">Core Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
@@ -61,11 +81,11 @@ const About = () => {
                 icon: "🌍"
               }
             ].map((feature, index) => (
-              <Card key={index} className="hover:scale-105 transition-transform duration-300">
+              <Card key={index} className="hover:scale-105 transition-transform duration-300 bg-white">
                 <CardContent className="p-6 text-center">
                   <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-display font-bold mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-xl font-display font-bold mb-2 text-secondary">{feature.title}</h3>
+                  <p className="text-gray-700">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -74,14 +94,14 @@ const About = () => {
       </section>
 
       {/* Impact Statement Section */}
-      <section className="py-16 px-6">
+      <section className="py-16 px-6 bg-white">
         <div className="container mx-auto text-center">
-          <h2 className="heading-lg mb-6">Making a Difference Together</h2>
-          <p className="body-text text-muted-foreground max-w-2xl mx-auto mb-8">
+          <h2 className="heading-lg mb-6 text-secondary">Making a Difference Together</h2>
+          <p className="body-text text-gray-700 max-w-2xl mx-auto mb-8">
             Join us in holding corporations accountable and making a difference in our communities 
             and the world.
           </p>
-          <Button className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <Button className="animate-fade-up bg-primary hover:bg-primary/90" style={{ animationDelay: "0.2s" }}>
             Get Started <ArrowRight className="ml-2" size={16} />
           </Button>
         </div>
@@ -92,13 +112,13 @@ const About = () => {
         <div className="container mx-auto text-center">
           <h2 className="heading-lg mb-8">Get in Touch</h2>
           <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-            <a href="mailto:contact@profitandplunder.org" className="hover:text-accent transition-colors">
+            <a href="mailto:contact@profitandplunder.org" className="text-white hover:text-accent transition-colors">
               contact@profitandplunder.org
             </a>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-accent transition-colors">Twitter</a>
-              <a href="#" className="hover:text-accent transition-colors">LinkedIn</a>
-              <a href="#" className="hover:text-accent transition-colors">GitHub</a>
+              <a href="#" className="text-white hover:text-accent transition-colors">Twitter</a>
+              <a href="#" className="text-white hover:text-accent transition-colors">LinkedIn</a>
+              <a href="#" className="text-white hover:text-accent transition-colors">GitHub</a>
             </div>
           </div>
         </div>
