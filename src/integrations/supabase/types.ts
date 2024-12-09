@@ -39,6 +39,7 @@ export type Database = {
       billionaires: {
         Row: {
           alias: string | null
+          current_rank: number | null
           financial_assets: Json | null
           id: number
           last_change: number | null
@@ -46,6 +47,8 @@ export type Database = {
           linked_companies: Json | null
           name: string
           net_worth: number | null
+          net_worth_history: Json | null
+          previous_rank: number | null
           primary_industry: string | null
           rank_history: Json | null
           residence: string | null
@@ -53,6 +56,7 @@ export type Database = {
         }
         Insert: {
           alias?: string | null
+          current_rank?: number | null
           financial_assets?: Json | null
           id?: number
           last_change?: number | null
@@ -60,6 +64,8 @@ export type Database = {
           linked_companies?: Json | null
           name: string
           net_worth?: number | null
+          net_worth_history?: Json | null
+          previous_rank?: number | null
           primary_industry?: string | null
           rank_history?: Json | null
           residence?: string | null
@@ -67,6 +73,7 @@ export type Database = {
         }
         Update: {
           alias?: string | null
+          current_rank?: number | null
           financial_assets?: Json | null
           id?: number
           last_change?: number | null
@@ -74,6 +81,8 @@ export type Database = {
           linked_companies?: Json | null
           name?: string
           net_worth?: number | null
+          net_worth_history?: Json | null
+          previous_rank?: number | null
           primary_industry?: string | null
           rank_history?: Json | null
           residence?: string | null
@@ -455,6 +464,47 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      real_time_updates: {
+        Row: {
+          billionaire_id: number | null
+          change_amount: number | null
+          change_percentage: number | null
+          id: number
+          new_value: number | null
+          previous_value: number | null
+          timestamp: string | null
+          update_type: string | null
+        }
+        Insert: {
+          billionaire_id?: number | null
+          change_amount?: number | null
+          change_percentage?: number | null
+          id?: number
+          new_value?: number | null
+          previous_value?: number | null
+          timestamp?: string | null
+          update_type?: string | null
+        }
+        Update: {
+          billionaire_id?: number | null
+          change_amount?: number | null
+          change_percentage?: number | null
+          id?: number
+          new_value?: number | null
+          previous_value?: number | null
+          timestamp?: string | null
+          update_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "real_time_updates_billionaire_id_fkey"
+            columns: ["billionaire_id"]
+            isOneToOne: false
+            referencedRelation: "billionaires"
             referencedColumns: ["id"]
           },
         ]
