@@ -13,6 +13,10 @@ import Privacy from "./pages/Privacy";
 import Search from "./pages/Search";
 import Filter from "./pages/Filter";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import Rankings from "./pages/Rankings";
+import DailyMovers from "./pages/DailyMovers";
+import IndustryRankings from "./pages/IndustryRankings";
+import CountryRankings from "./pages/CountryRankings";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +33,10 @@ const App = () => (
           <Route path="/billionaires" element={<Billionaires />} />
           <Route path="/billionaires/:id" element={<Billionaires />} />
           <Route path="/trackers" element={<Trackers />} />
+          <Route path="/rankings" element={<Rankings />} />
+          <Route path="/daily-movers" element={<DailyMovers />} />
+          <Route path="/industry-rankings" element={<IndustryRankings />} />
+          <Route path="/country-rankings" element={<CountryRankings />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />

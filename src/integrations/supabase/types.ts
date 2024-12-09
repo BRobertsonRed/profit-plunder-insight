@@ -9,34 +9,73 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      age_demographics: {
+        Row: {
+          age_group: string
+          female_count: number
+          id: number
+          last_updated: string | null
+          male_count: number
+          total_count: number
+        }
+        Insert: {
+          age_group: string
+          female_count: number
+          id?: number
+          last_updated?: string | null
+          male_count: number
+          total_count: number
+        }
+        Update: {
+          age_group?: string
+          female_count?: number
+          id?: number
+          last_updated?: string | null
+          male_count?: number
+          total_count?: number
+        }
+        Relationships: []
+      }
       billionaires: {
         Row: {
+          alias: string | null
+          financial_assets: Json | null
           id: number
           last_change: number | null
+          last_updated: string | null
           linked_companies: Json | null
           name: string
           net_worth: number | null
           primary_industry: string | null
+          rank_history: Json | null
           residence: string | null
           ytd_change: number | null
         }
         Insert: {
+          alias?: string | null
+          financial_assets?: Json | null
           id?: number
           last_change?: number | null
+          last_updated?: string | null
           linked_companies?: Json | null
           name: string
           net_worth?: number | null
           primary_industry?: string | null
+          rank_history?: Json | null
           residence?: string | null
           ytd_change?: number | null
         }
         Update: {
+          alias?: string | null
+          financial_assets?: Json | null
           id?: number
           last_change?: number | null
+          last_updated?: string | null
           linked_companies?: Json | null
           name?: string
           net_worth?: number | null
           primary_industry?: string | null
+          rank_history?: Json | null
           residence?: string | null
           ytd_change?: number | null
         }
@@ -104,6 +143,69 @@ export type Database = {
           name?: string
           profit?: Json | null
           shareholder_payouts?: Json | null
+        }
+        Relationships: []
+      }
+      country_stats: {
+        Row: {
+          billionaire_count: number
+          country_code: string
+          country_name: string
+          id: number
+          last_updated: string | null
+          richest_billionaire: string
+          richest_billionaire_net_worth: number
+          total_net_worth: number
+        }
+        Insert: {
+          billionaire_count: number
+          country_code: string
+          country_name: string
+          id?: number
+          last_updated?: string | null
+          richest_billionaire: string
+          richest_billionaire_net_worth: number
+          total_net_worth: number
+        }
+        Update: {
+          billionaire_count?: number
+          country_code?: string
+          country_name?: string
+          id?: number
+          last_updated?: string | null
+          richest_billionaire?: string
+          richest_billionaire_net_worth?: number
+          total_net_worth?: number
+        }
+        Relationships: []
+      }
+      daily_movers: {
+        Row: {
+          date: string
+          id: number
+          last_updated: string | null
+          name: string
+          net_worth_change: number
+          percentage_change: number
+          type: string
+        }
+        Insert: {
+          date: string
+          id?: number
+          last_updated?: string | null
+          name: string
+          net_worth_change: number
+          percentage_change: number
+          type: string
+        }
+        Update: {
+          date?: string
+          id?: number
+          last_updated?: string | null
+          name?: string
+          net_worth_change?: number
+          percentage_change?: number
+          type?: string
         }
         Relationships: []
       }
@@ -215,6 +317,39 @@ export type Database = {
           },
         ]
       }
+      industry_stats: {
+        Row: {
+          billionaire_count: number
+          id: number
+          industry_key: string
+          industry_name: string
+          last_updated: string | null
+          richest_billionaire: string
+          richest_billionaire_net_worth: number
+          total_net_worth: number
+        }
+        Insert: {
+          billionaire_count: number
+          id?: number
+          industry_key: string
+          industry_name: string
+          last_updated?: string | null
+          richest_billionaire: string
+          richest_billionaire_net_worth: number
+          total_net_worth: number
+        }
+        Update: {
+          billionaire_count?: number
+          id?: number
+          industry_key?: string
+          industry_name?: string
+          last_updated?: string | null
+          richest_billionaire?: string
+          richest_billionaire_net_worth?: number
+          total_net_worth?: number
+        }
+        Relationships: []
+      }
       legal_cases: {
         Row: {
           company_id: number | null
@@ -323,6 +458,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      self_made_stats: {
+        Row: {
+          billionaire_count: number
+          id: number
+          last_updated: string | null
+          self_made_category: string
+          total_net_worth: number
+        }
+        Insert: {
+          billionaire_count: number
+          id?: number
+          last_updated?: string | null
+          self_made_category: string
+          total_net_worth: number
+        }
+        Update: {
+          billionaire_count?: number
+          id?: number
+          last_updated?: string | null
+          self_made_category?: string
+          total_net_worth?: number
+        }
+        Relationships: []
       }
       supply_chain_violations: {
         Row: {
