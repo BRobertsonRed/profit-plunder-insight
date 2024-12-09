@@ -42,6 +42,8 @@ const Billionaires = () => {
       return data;
     },
     enabled: !!id && !isNaN(parseInt(id)),
+    staleTime: 30000, // Consider data fresh for 30 seconds
+    retry: 2, // Retry failed requests twice
   });
 
   useEffect(() => {
@@ -61,8 +63,8 @@ const Billionaires = () => {
           console.log('Real-time update received:', payload);
           const newData = payload.new as typeof billionaire;
           
-          if (newData.net_worth !== billionaire?.net_worth) {
-            const change = newData.net_worth - (billionaire?.net_worth || 0);
+          if (newData?.net_worth !== billionaire?.net_worth) {
+            const change = (newData?.net_worth || 0) - (billionaire?.net_worth || 0);
             const changeText = change > 0 ? `+$${change.toFixed(2)}B` : `-$${Math.abs(change).toFixed(2)}B`;
             
             toast({
